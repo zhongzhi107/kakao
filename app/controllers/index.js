@@ -12,23 +12,27 @@ import {add} from '../../lib/utils';
 export default (router) => {
   router.get('/', function* () {
     let Article = mongoose.model('Article');
-    let a = yield Article.find();
-    console.log(a, add(1,2,3));
+    let collection = yield Article.find({title: 'aaa11'});
+    console.log(collection.length, add(1,2,3));
 
-    var kitty = new Article({
-      title: 'aaa11',
-      body: 'bbb11'
-    });
-    try {
-      yield kitty.save();
-    } catch (e) {
-      console.log(e);
+    // yield Article.remove();
+
+    if (collection.length === 0) {
+      let kitty = new Article({
+        title: 'aaa11',
+        body: 'bbb11'
+      });
+      try {
+        yield kitty.save();
+      } catch (e) {
+        console.log(e);
+      }
     }
 
     // Render jade template
     // this.render('index');
 
     // Response JSON
-    this.body = a;
+    this.body = collection;
   });
 };
