@@ -24,6 +24,14 @@ By default the app tries to connect to port 3000. After starting the application
 
 The url [localhost:3000](http://localhost:3000) returns the json document yielded by mongoose. This assumes that you have a connection stablished with a mongodb instance and a mongo document has already been inserted in the db.
 
+```sh
+# Start mongodb Service
+$ /usr/local/mongodb/bin/mongod --dbpath=./data
+
+# mongodb Client
+$ /usr/local/mongodb/bin/mongo
+```
+
 ## Overview
 ...
 

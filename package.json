@@ -47,5 +47,9 @@
     "mongoose": "^4.1.2",
     "request": "^2.60.0",
     "require-all": "^1.1.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.8.0",
+    "supervisor": "^0.7.1"
   }
 }

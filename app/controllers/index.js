@@ -17,7 +17,7 @@ export default (router) => {
 
     var kitty = new Article({
       title: 'aaa11',
-      // body: 'bbb11'
+      body: 'bbb11'
     });
     try {
       yield kitty.save();

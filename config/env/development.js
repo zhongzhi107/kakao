@@ -1,5 +1,5 @@
 'use strict';
 
 export default {
-  db: 'mongodb://root:root@locahost:27017/test'
+  db: 'mongodb://localhost:27017/test'
 };
