@@ -5,6 +5,7 @@
 'use strict';
 
 import koa from 'koa';
+import logger from './config/middlewares/koa-log4js';
 import compose from 'koa-compose';
 import compress from 'koa-compress';
 import json from 'koa-json';
@@ -44,28 +45,6 @@ connect();
 mongoose.connection.on('error', console.log);
 mongoose.connection.on('disconnected', connect);
 
-// Automatic require all models
-//requireAll(__dirname + '/app/models');
-
-//let Article = mongoose.model('Article');
-
-// var kitty = new Article({
-//   title: 'aaa',
-//   body: 'bbb'
-// });
-// kitty.save(function (err) {
-//   if (err) {
-//     console.log(err);
-//     // throw err;
-//   } else {
-//     console.log('meow');
-//   }
-// });
-
-// Article.find(function(err, doc) {
-//   console.log('====doc: ', doc);
-// });
-
 // 初始化路由
 let router = new Router();
 let controllers = requireAll(__dirname + '/app/controllers');
@@ -79,6 +58,7 @@ let jadeMiddleware = jade.middleware({
 // 初始化应用程序
 let app = koa();
 let all = compose([
+  logger(config.log4js),
   compress(),
   jadeMiddleware,
   json({pretty: DEV}),
