@@ -1,5 +1,6 @@
 import User from '../models/user';
 import Post from '../models/post';
+import {k as knex} from '../models/base';
 
 // User.NotFoundError((e) => {
 //   console.log('===', e);
@@ -25,7 +26,7 @@ export default (router) => router
         // 必须返回数据
         // require: true,
         // 只返回指定的字段
-        columns: ['id', 'name'],
+        columns: ['id', 'first_name'],
         // 返回关联表信息
         withRelated: ['posts', 'posts.tags'],
         // withRelated: [{
@@ -47,7 +48,8 @@ export default (router) => router
 
   .post('/users', async (ctx) => {
     let result;
-    await User.create({name: ctx.request.body.name})
+    await User
+      .create({first_name: ctx.request.body.first_name})
       .then(() => {
         result = {code: 0, message: '新增成功'};
       })
@@ -73,22 +75,31 @@ export default (router) => router
     let result;
     let id = ctx.params.id;
 
-    await new User({id}).destroy()
-    .then(() => {
-      result = {code: 0, message: '用户删除成功'};
-      return Post.where('user_id', id);
-    })
-    .then((posts) => {
-      console.log('====', new Collection(posts));
-      // return Post.where('user_id', id).fetch();
-      // const postObject = posts.toJSON();
-      // posts.destroy();
-      // console.log('====posts: ', posts.toJSON().id);
-    })
-    .catch((e) => {
-      console.log('===error==', e);
-      result = {code: 1, message: '用户删除失败'};
-    });
+    await new User({id})
+      .destroy()
+      // .fetch()
+      .then(() => {
+        result = {code: 0, message: '用户删除成功'};
+        // return knex.select('id').from('posts').whereIn('user_id', id);
+        // return knex('posts').whereIn('user_id', id).del();
+        return Post.where('user_id', id).fetchAll(); //
+      })
+      // 删posts表中的关联数据
+      .then((posts) => {
+        // console.log(posts.toJSON());
+        let postIds = [];
+        posts.forEach((item) => {
+          postIds.push(item.id);
+          // 从数据库中删除post
+          item.destroy();
+        });
+        // TODO 使用ORM方式删除，避免自己操作数据库
+        return knex('posts_tags').whereIn('post_id', postIds).del();
+      })
+      .catch((e) => {
+        console.log('===error==', e);
+        result = {code: 1, message: '用户删除失败'};
+      });
 
     ctx.body = result;
   });

@@ -4,7 +4,7 @@
   "description": "Kakao is an ORM and RESTful nodejs web framework based Koa2 like Ruby on Rails.",
   "main": "index.js",
   "scripts": {
-    "start": "DEBUG=knex:query NODE_ENV=development supervisor index.js --ignore node_modules",
+    "start": "DEBUG=knex:query NODE_ENV=development supervisor --ignore node_modules index.js",
     "migrate:latest": "knex migrate:latest && knex seed:run",
     "migrate:rollback": "knex migrate:rollback",
     "start2": "knex migrate:latest && knex seed:run && NODE_ENV=development PORT=3000 npm run watch:server",

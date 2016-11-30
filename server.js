@@ -7,10 +7,10 @@ import json from 'koa-json';
 import bodyParser from 'koa-bodyparser';
 import morgan from 'koa-morgan';
 import FileStreamRotator from 'file-stream-rotator';
-import {prefix} from './config';
+import {prefix, port} from './config';
 
 // webserver端口
-const PORT = 3000;
+const PORT = port;
 
 const router = new Router({prefix});
 const routes = importDir('./routes');
