@@ -1,6 +1,4 @@
 import User from '../models/user';
-import Post from '../models/post';
-import {k as knex} from '../models/base';
 
 // User.NotFoundError((e) => {
 //   console.log('===', e);
@@ -77,24 +75,8 @@ export default (router) => router
 
     await new User({id})
       .destroy()
-      // .fetch()
       .then(() => {
         result = {code: 0, message: '用户删除成功'};
-        // return knex.select('id').from('posts').whereIn('user_id', id);
-        // return knex('posts').whereIn('user_id', id).del();
-        return Post.where('user_id', id).fetchAll(); //
-      })
-      // 删posts表中的关联数据
-      .then((posts) => {
-        // console.log(posts.toJSON());
-        let postIds = [];
-        posts.forEach((item) => {
-          postIds.push(item.id);
-          // 从数据库中删除post
-          item.destroy();
-        });
-        // TODO 使用ORM方式删除，避免自己操作数据库
-        return knex('posts_tags').whereIn('post_id', postIds).del();
       })
       .catch((e) => {
         console.log('===error==', e);

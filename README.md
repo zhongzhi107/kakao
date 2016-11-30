@@ -26,6 +26,7 @@ An API-driven framework for building nodejs apps, using MVC conventions. It only
   - [ ] joi.description()不起作用
   - [ ] schema/joi
   - [x] 分页
+  - [x] 使用bookshelf-cascade-delete删除关联表数据，避免使用数据库外键
 - [x] Debug
 - [ ] Cache
 - [ ] Task
