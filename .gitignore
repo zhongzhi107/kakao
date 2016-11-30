@@ -1,6 +1,4 @@
 .DS_Store
-/npm-debug.log
-/node_modules*
-/.idea*
-mongod.sh
-/bin*
+npm-debug.log
+log/
+node_modules/

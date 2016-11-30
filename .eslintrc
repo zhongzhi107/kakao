@@ -1,0 +1,20 @@
+{
+  "extends": ["google", "plugin:import/recommended"],
+  "parser": "babel-eslint",
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "plugins": [
+    "import"
+  ],
+  "settings": {
+    "import/resolve": {
+      "moduleDirectory": ["node_modules"]
+    }
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": "error",
+    "import/first": ["error", "absolute-first"],
+  }
+}

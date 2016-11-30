@@ -1,55 +1,50 @@
 {
-  "name": "kakao",
+  "name": "api",
   "version": "1.0.0",
-  "description": "An API-driven framework for building nodejs apps, using MVC conventions",
-  "keywords": [
-    "mvc",
-    "web-framework",
-    "koa",
-    "REST",
-    "API",
-    "orm",
-    "node",
-    "mongodb",
-    "mongoose",
-    "demo"
-  ],
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "serve": "NODE_ENV=development supervisor --harmony server.js || (set NODE_ENV=development&&supervisor --harmony server.js)",
-    "start": "npm run test:jshint && npm run serve",
-    "test:jshint": "jshint app config"
+    "start": "DEBUG=knex:query NODE_ENV=development supervisor index.js",
+    "migrate:latest": "knex migrate:latest && knex seed:run",
+    "migrate:rollback": "knex migrate:rollback",
+    "start2": "knex migrate:latest && knex seed:run && NODE_ENV=development PORT=3000 npm run watch:server",
+    "serve": "DEBUG=knex:query NODE_ENV=development babel-node src/server.js",
+    "eslint": "eslint src",
+    "production": "NODE_ENV=production node_modules/.bin/pm2 index.js"
   },
-  "homepage": "http://github.com/zhongzhi107/kakao",
-  "author": {
-    "name": "Zhongzhi107",
-    "email": "zhong.zhi@163.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/zhongzhi107/kakao.git"
-  },
+  "author": "zhongzhi <zhong.zhi@163.com>",
+  "pre-commit": [
+    "eslint"
+  ],
   "license": "MIT",
-  "engines": {
-    "node": ">= 0.11.16",
-    "npm": ">= 2.1"
-  },
   "dependencies": {
-    "babel": "^5.8.21",
-    "babel-core": "^5.8.22",
-    "koa": "^0.21.0",
-    "koa-compose": "^2.3.0",
-    "koa-compress": "^1.0.8",
-    "koa-jade": "^1.1.0",
-    "koa-json": "^1.1.1",
-    "koa-router": "^5.1.2",
-    "lodash": "^3.10.1",
-    "log4js": "^0.6.26",
-    "mongoose": "^4.1.2",
-    "request": "^2.60.0",
-    "require-all": "^1.1.0"
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "bookshelf": "^0.10.2",
+    "bookshelf-modelbase": "^2.10.2",
+    "file-stream-rotator": "0.0.7",
+    "import-dir": "0.0.1",
+    "joi": "^10.0.1",
+    "knex": "^0.12.6",
+    "koa": "^2.0.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-json": "^2.0.0",
+    "koa-morgan": "^1.0.1",
+    "koa-router": "^7.0.1",
+    "lodash": "^4.17.2",
+    "mysql": "^2.12.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
-    "jshint": "^2.8.0",
-    "supervisor": "^0.7.1"
+    "casual": "^1.5.8",
+    "eslint": "^3.11.0",
+    "eslint-config-google": "^0.7.1",
+    "eslint-plugin-import": "^2.2.0",
+    "supervisor": "^0.12.0"
   }
 }
