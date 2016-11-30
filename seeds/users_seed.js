@@ -1,4 +1,4 @@
-'use strict';
+/* eslint-disable import/unambiguous */
 
 const casual = require('casual');
 // const uuid = require('uuid/v1');

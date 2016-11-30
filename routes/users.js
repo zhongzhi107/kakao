@@ -1,6 +1,5 @@
 import User from '../models/user';
 import Post from '../models/post';
-import Tag from '../models/tag';
 
 // User.NotFoundError((e) => {
 //   console.log('===', e);
