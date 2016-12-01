@@ -1,4 +1,4 @@
-/* eslint-disable import/unambiguous */
+'use strict';
 
 const TABLE_NAME = 'tags';
 

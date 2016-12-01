@@ -14,7 +14,8 @@
     }
   },
   "rules": {
-    "import/no-extraneous-dependencies": "error",
-    "import/first": ["error", "absolute-first"],
+    "import/no-extraneous-dependencies": 2,
+    "import/first": [2, "absolute-first"],
+    "import/unambiguous": 0,
   }
 }
