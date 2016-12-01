@@ -3,7 +3,7 @@
 const TABLE_NAME = 'users';
 
 exports.up = function(knex, Promise) {
-  return knex.schema.createTableIfNotExists(TABLE_NAME, function(table) {
+  return knex.schema.createTable(TABLE_NAME, function(table) {
     table.comment('用户表');
     table.string('id', 36).primary().notNull();
     table.enu('status', ['active', 'disabled']).nullable().comment('账号状态');

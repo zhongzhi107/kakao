@@ -3,7 +3,7 @@
 const TABLE_NAME = 'posts';
 
 exports.up = function(knex, Promise) {
-  return knex.schema.createTableIfNotExists(TABLE_NAME, function(table) {
+  return knex.schema.createTable(TABLE_NAME, function(table) {
     table.comment('文章表');
     table.string('id', 36).primary().notNull();
     table.string('subject', 50).nullable().comment('文章标题');
