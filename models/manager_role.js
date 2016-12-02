@@ -16,13 +16,23 @@ export default class extends bookshelf.Model {
   }
 
   /**
+   * 是否包含creted_at和updated_at
+   * 默认包含
+   * @member
+   * @return {boolean|array}
+   */
+  get hasTimestamps() {
+    return false;
+  }
+
+  /**
    * schema验证
    */
-  get validate() {
-    return {
-      manager_id: Joi.integer().required(),
-      role_id: Joi.integer().required(),
-    };
-  }
+  // get validate() {
+  //   return {
+  //     manager_id: Joi.integer().required(),
+  //     role_id: Joi.integer().required(),
+  //   };
+  // }
 
 };

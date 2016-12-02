@@ -1,6 +1,6 @@
 'use strict';
 
-const TABLE_NAME = 'roles_modules';
+const TABLE_NAME = 'modules_roles';
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable(TABLE_NAME, function(table) {
@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
     table.integer('role_id').notNullable().comment('角色ID');
     table.integer('module_id').notNullable().comment('模块ID');
     table.integer('module_right').notNullable().comment('模块权限');
-    table.unique(['role_id', 'module_id']);
+    // table.unique(['role_id', 'module_id']);
   });
 };
 

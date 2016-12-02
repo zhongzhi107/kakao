@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
     table.comment('用户角色关联表');
     table.integer('manager_id').notNullable().comment('用户ID');
     table.integer('role_id').notNullable().comment('角色ID');
-    table.unique(['manager_id', 'role_id']);
+    // table.unique(['manager_id', 'role_id']);
   });
 };
 

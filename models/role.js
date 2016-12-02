@@ -1,6 +1,7 @@
 import Joi from 'joi';
 import bookshelf from './base';
-// import Post from './post';
+import Manager from './manager';
+import Module from './module';
 
 /**
  * @class Role
@@ -11,7 +12,7 @@ export default class extends bookshelf.Model {
    * 依赖表，删除时依据此项删除关联表中对应的数据
    * @static {array}
    */
-  // static dependents = ['posts'];
+  static dependents = ['managers', 'modules'];
 
   /**
    * 表名称
@@ -46,8 +47,17 @@ export default class extends bookshelf.Model {
    * @method
    * @return {bookshelf.Model}
    */
-  // posts() {
-  //   return this.hasMany(Post);
-  // }
+  managers() {
+    return this.belongsToMany(Manager);
+  }
+
+  /**
+   * 一对多关系
+   * @method
+   * @return {bookshelf.Model}
+   */
+  modules() {
+    return this.belongsToMany(Module);
+  }
 
 };

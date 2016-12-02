@@ -1,4 +1,5 @@
-const TABLE_NAME = 'roles_modules';
+// 关联表的命名要按被关联表名称正序连接
+const TABLE_NAME = 'modules_roles';
 
 exports.seed = function(knex, Promise) {
   let data = [
