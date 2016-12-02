@@ -20,6 +20,15 @@ export default class extends bookshelf.Model {
     return 'users';
   }
 
+  /**
+   * 插入新记录时是否自动生成UUID
+   * @return {boolean}
+   */
+  get uuid() {
+    return true;
+  }
+
+
   // 是否包含creted_at和updated_at
   // 默认包含
   // hasTimestamps: [],

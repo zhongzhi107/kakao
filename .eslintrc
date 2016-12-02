@@ -14,6 +14,7 @@
     }
   },
   "rules": {
+    # "no-unused-vars": 2,
     "import/no-extraneous-dependencies": 2,
     "import/first": [2, "absolute-first"],
     "import/unambiguous": 0,

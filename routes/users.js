@@ -47,7 +47,7 @@ export default (router) => router
   .post('/users', async (ctx) => {
     let result;
     await User
-      .create({first_name: ctx.request.body.first_name})
+      .create(ctx.request.body)
       .then(() => {
         result = {code: 0, message: '新增成功'};
       })
