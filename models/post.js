@@ -4,6 +4,7 @@ import Tag from './tag';
 
 /**
  * @class Post
+ * @extends bookshelf.Model
  */
 export default class extends bookshelf.Model {
   /**

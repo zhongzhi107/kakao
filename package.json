@@ -32,6 +32,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "babel-register": "^6.18.0",
     "bookshelf": "^0.10.2",
+    "bookshelf-api": "^1.7.0",
     "bookshelf-cascade-delete": "^2.0.0",
     "bookshelf-modelbase": "^2.10.2",
     "file-stream-rotator": "0.0.7",
