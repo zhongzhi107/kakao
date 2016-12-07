@@ -1,6 +1,7 @@
 import Joi from 'joi';
 import bookshelf from './base';
 import Role from './role';
+import Module from './module';
 
 /**
  * @class
@@ -41,12 +42,21 @@ export default class extends bookshelf.Model {
   }
 
   /**
-   * 一对多关系
+   * Many-to-many
    * @method
    * @return {bookshelf.Collection}
    */
   roles() {
     return this.belongsToMany(Role);
+  }
+
+  /**
+   * Many-to-many
+   * @method
+   * @return {bookshelf.Collection}
+   */
+  moudles() {
+    return this.belongsToMany(Module).through(Role);
   }
 
 };

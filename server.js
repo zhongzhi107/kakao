@@ -32,8 +32,8 @@ const accessLogStream = FileStreamRotator.getStream({
 const app = new Koa();
 app.use(morgan('combined', {stream: accessLogStream}));
 app.use(bodyParser());
-app.use(json({pretty: true}));
 app.use(router.routes());
+app.use(json({pretty: true}));
 
 app.listen(PORT, (err) => {
   if (err) {
