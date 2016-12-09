@@ -55,7 +55,7 @@ export default class extends bookshelf.Model {
    * @method
    * @return {bookshelf.Collection}
    */
-  moudles() {
+  modules() {
     return this.belongsToMany(Module).through(Role);
   }
 
