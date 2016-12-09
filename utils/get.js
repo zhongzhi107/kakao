@@ -1,3 +1,5 @@
+import {isFunction} from 'util';
+
 export default (Model) => {
   return async (ctx) => {
     const query = ctx.query;
@@ -6,12 +8,21 @@ export default (Model) => {
     const {id} = ctx.params;
     let result;
 
-    if (id) {
-      where.id = id;
-    }
-
     if (query.withRelated) {
       fetchParams.withRelated = query.withRelated;
+    }
+
+    console.log('====query:', query);
+    // Get one record
+    if (id) {
+      where.id = id;
+    } else if (query.where) {
+      // curl --globoff http://localhost:3000/api/roles?where=id\&where=\>\&where=1
+      if(Array.isArray(query.where)) {
+        Model = Model.where.apply(Model, query.where);
+      } else if(isFunction(query.where)) {
+        Model = Model.where(query.where);
+      }
     }
 
     // get all records
