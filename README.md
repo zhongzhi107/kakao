@@ -27,6 +27,7 @@ An API-driven framework for building nodejs apps, using MVC conventions. It only
   - [ ] schema/joi
   - [x] 分页
   - [x] 使用bookshelf-cascade-delete删除关联表数据，避免使用数据库外键
+  - [x] 根据models自动创建CRUD路由
 - [x] Debug
 - [ ] Cache
 - [ ] Task
@@ -80,6 +81,9 @@ $ /usr/local/mongodb/bin/mongo
 
 ## Overview
 ...
+
+## Notes
+- curl传递多个querystring参数时，`&` 前需要加 `\`，如 `http://localhost/api/roles?sort=id\&direction=desc`
 
 ## References
 
