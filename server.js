@@ -5,6 +5,7 @@ import Router from 'koa-router';
 import importDir from 'import-dir';
 import json from 'koa-json';
 import bodyParser from 'koa-bodyparser';
+import qs from 'koa-qs';
 import morgan from 'koa-morgan';
 import FileStreamRotator from 'file-stream-rotator';
 // import {capitalize} from 'lodash';
@@ -16,7 +17,6 @@ const PORT = port;
 
 const router = new Router({prefix});
 const routes = importDir('./routes');
-console.log(routes);
 Object.keys(routes).forEach((name) => routes[name](router));
 crud(router, {
   patterns: ['**/*.js', '!base.js'],
@@ -37,6 +37,7 @@ const accessLogStream = FileStreamRotator.getStream({
 });
 
 const app = new Koa();
+qs(app);
 app.use(morgan('combined', {stream: accessLogStream}));
 app.use(bodyParser());
 app.use(json({pretty: true}));

@@ -1,4 +1,4 @@
-import {isFunction} from 'util';
+import {isObject} from 'util';
 
 export default (Model) => {
   return async (ctx) => {
@@ -20,7 +20,7 @@ export default (Model) => {
       // curl --globoff http://localhost:3000/api/roles?where=id\&where=\>\&where=1
       if(Array.isArray(query.where)) {
         Model = Model.where.apply(Model, query.where);
-      } else if(isFunction(query.where)) {
+      } else if(isObject(query.where)) {
         Model = Model.where(query.where);
       }
     }
