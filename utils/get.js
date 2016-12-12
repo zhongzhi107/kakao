@@ -1,3 +1,14 @@
+/**
+ * 该文件处理 2 类路由
+ *   1. get('/models')
+ *   2. get('/models/:id')
+ *
+ * 对于第 1 类路由，可以接以下几个querystring参数来实现不同的返回
+ * 1. withRelated - 获取关联数据
+ * 2. where - 根据条件查询数据
+ * 3.
+ * 4.
+ */
 import {isObject} from 'util';
 
 export default (Model) => {
@@ -12,15 +23,17 @@ export default (Model) => {
       fetchParams.withRelated = query.withRelated;
     }
 
-    console.log('====query:', query);
     // Get one record
+    // curl http://localhost:3000/api/roles/2
     if (id) {
-      where.id = id;
+      where[Model.idAttribute] = id;
     } else if (query.where) {
       // curl --globoff http://localhost:3000/api/roles?where=id\&where=\>\&where=1
       if(Array.isArray(query.where)) {
-        Model = Model.where.apply(Model, query.where);
+        Model = Model.where(...query.where);
+        // Model = Model.where.apply(Model, query.where);
       } else if(isObject(query.where)) {
+        // curl --globoff http://localhost:3000/api/roles?where[name]=sales
         Model = Model.where(query.where);
       }
     }
