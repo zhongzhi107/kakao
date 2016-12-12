@@ -13,7 +13,7 @@ An API-driven framework for building nodejs apps, using MVC conventions. It only
 ## TODO
 - [ ] Log
   - [x] accessLog
-  - [ ] requestLog
+  - [x] requestLog
 - [x] Router
 - [ ] REST
   - [x] GET

@@ -1,3 +1,4 @@
+export const logDirectory = './log';
 
 // url前缀
 export const prefix = '/api';

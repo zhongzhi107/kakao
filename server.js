@@ -9,8 +9,11 @@ import qs from 'koa-qs';
 import morgan from 'koa-morgan';
 import FileStreamRotator from 'file-stream-rotator';
 // import {capitalize} from 'lodash';
-import {prefix, port} from './config';
+import {prefix, port, logDirectory} from './config';
 import crud from './utils/crud';
+import logger from './utils/logger';
+
+logger.info('Hello');
 
 // webserver端口
 const PORT = port;
@@ -23,15 +26,15 @@ crud(router, {
   // cwd: './models',
 });
 
-const logDirectory = path.join(process.cwd(), 'log');
-if (!fs.existsSync(logDirectory)) {
-  fs.mkdirSync(logDirectory);
+const logDir = path.join(process.cwd(), logDirectory);
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir);
 }
 
 // create a rotating write stream
 const accessLogStream = FileStreamRotator.getStream({
   date_format: 'YYYYMMDD',
-  filename: logDirectory + '/access-%DATE%.log',
+  filename: logDir + '/access-%DATE%.log',
   frequency: 'daily',
   verbose: false,
 });

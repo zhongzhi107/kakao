@@ -15,6 +15,15 @@ export default class extends bookshelf.Model {
   static dependents = ['managers', 'modules'];
 
   /**
+   * ID名称
+   * @member
+   * @return {string}
+   */
+  // get idAttribute() {
+  //   return 'id';
+  // }
+
+  /**
    * 表名称
    * @member
    * @return {string}
