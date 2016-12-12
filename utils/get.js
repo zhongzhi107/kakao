@@ -14,7 +14,6 @@ import {isObject} from 'util';
 export default (Model) => {
   return async (ctx) => {
     const query = ctx.query;
-    const where = {};
     const fetchParams = {};
     const {id} = ctx.params;
     let result;
@@ -26,7 +25,9 @@ export default (Model) => {
     // Get one record
     // curl http://localhost:3000/api/roles/2
     if (id) {
-      where[Model.idAttribute] = id;
+      const findById = {};
+      findById[Model.idAttribute] = id;
+      Model = Model.where(findById);
     } else if (query.where) {
       // curl --globoff http://localhost:3000/api/roles?where=id\&where=\>\&where=1
       if(Array.isArray(query.where)) {
@@ -50,15 +51,35 @@ export default (Model) => {
 
     // Offset support
 
-    await Model
-      .where(where)
-      .fetchAll(fetchParams)
-      .then((items) => {
-        result = items.toJSON();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    // Pagination support
+    if (query.page || query.page_size) {
+      console.log(query);
+      // const {page = 1, page_size = 10} = query;
+      // console.log(page, pageSize);
+      const page = query.page || 1;
+      const pageSize = query.page_size || 10;
+      await Model
+        .fetchPage({
+          page,
+          pageSize,
+          ...fetchParams,
+        })
+        .then((items) => {
+          result = items.toJSON();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      await Model
+        .fetchAll(fetchParams)
+        .then((items) => {
+          result = items.toJSON();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
     ctx.body = result;
   };
 };
