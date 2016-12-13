@@ -1,4 +1,4 @@
-import Joi from 'joi';
+// import Joi from 'joi';
 import bookshelf from './base';
 import Manager from './manager';
 import Module from './module';
@@ -45,11 +45,11 @@ export default class extends bookshelf.Model {
   /**
    * schema验证
    */
-  get validate() {
-    return {
-      name: Joi.string().required(),
-    };
-  }
+  // get validate() {
+  //   return {
+  //     name: Joi.string().required(),
+  //   };
+  // }
 
   /**
    * 一对多关系

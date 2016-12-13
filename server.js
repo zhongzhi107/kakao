@@ -1,35 +1,20 @@
-import fs from 'fs';
 import path from 'path';
 import Koa from 'koa';
-import Router from 'koa-router';
 import importDir from 'import-dir';
 import json from 'koa-json';
 import bodyParser from 'koa-bodyparser';
 import qs from 'koa-qs';
 import morgan from 'koa-morgan';
 import FileStreamRotator from 'file-stream-rotator';
-// import {capitalize} from 'lodash';
-import {prefix, port, logDirectory} from './config';
-import crud from './utils/crud';
+import mkdirp from 'mkdirp';
+import {port, logDirectory} from './config';
 import logger from './utils/logger';
 
 logger.info('Hello');
 
-// webserver端口
-const PORT = port;
-
-const router = new Router({prefix});
-const routes = importDir('./routes');
-Object.keys(routes).forEach((name) => routes[name](router));
-crud(router, {
-  patterns: ['**/*.js', '!base.js'],
-  // cwd: './models',
-});
-
+// 创建日志目录
 const logDir = path.join(process.cwd(), logDirectory);
-if (!fs.existsSync(logDir)) {
-  fs.mkdirSync(logDir);
-}
+mkdirp.sync(logDir);
 
 // create a rotating write stream
 const accessLogStream = FileStreamRotator.getStream({
@@ -44,14 +29,18 @@ qs(app);
 app.use(morgan('combined', {stream: accessLogStream}));
 app.use(bodyParser());
 app.use(json({pretty: true}));
-app.use(router.routes());
 
-// console.log(router);
+// 导入路由
+const routes = importDir('./routes');
+console.log(routes);
+Object.keys(routes).map(
+  (name) => app.use(routes[name].routes())
+);
 
-app.listen(PORT, (err) => {
+app.listen(port, (err) => {
   if (err) {
     throw err;
   }
 
-  console.log('✅ koa listening on port %s', PORT);
+  console.log('✅ koa listening on port %s', port);
 });
