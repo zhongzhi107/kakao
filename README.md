@@ -11,20 +11,21 @@ An API-driven framework for building nodejs apps, using MVC conventions. It only
 * Well organized configuration files and routes
 
 ## TODO
-- [ ] Log
+- [ ] HTTPS support
+- [x] Log
   - [x] accessLog
   - [x] requestLog
 - [x] Router
-- [ ] REST
+- [x] REST
   - [x] GET
   - [x] POST
-  - [ ] PUT
-  - [ ] DELETE
+  - [x] PUT
+  - [x] DELETE
 - [x] ORM
   - [ ] withRelated返回指定的columns
-  - [ ] 自定义sql
+  - [x] 自定义sql
   - [ ] joi.description()不起作用
-  - [ ] schema/joi
+  - [x] schema/joi
   - [x] 分页
   - [x] 使用bookshelf-cascade-delete删除关联表数据，避免使用数据库外键
   - [x] 根据models自动创建CRUD路由
