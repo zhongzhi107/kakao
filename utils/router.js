@@ -142,7 +142,11 @@ export default class ResourceRouter extends Router {
             ...fetchParams,
           })
           .then((items) => {
-            result = items.toJSON();
+            if (query.mask) {
+              result = items.mask(query.mask);
+            } else {
+              result = items.toJSON();
+            }
           })
           .catch((e) => {
             console.log(e);
@@ -151,7 +155,12 @@ export default class ResourceRouter extends Router {
         await model
           .fetchAll(fetchParams)
           .then((items) => {
-            result = items.toJSON();
+            // result = items.toJSON();
+            if (query.mask) {
+              result = items.mask(query.mask);
+            } else {
+              result = items.toJSON();
+            }
           })
           .catch((e) => {
             console.log(e);
@@ -163,9 +172,20 @@ export default class ResourceRouter extends Router {
 
     // read item
     this.get(pattern.item, async (ctx) => {
-      ctx.body = await collection(ctx)
+      const query = ctx.query;
+      await collection(ctx)
         .query((q) => q.where({[id]: ctx.params.id}))
-        .fetchOne({required: true});
+        .fetchOne({required: true})
+        .then((item) => {
+          if (query.mask) {
+            ctx.body = item.mask(query.mask);
+          } else {
+            ctx.body = item.toJSON();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     });
     return this;
   }

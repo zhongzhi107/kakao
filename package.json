@@ -34,6 +34,7 @@
     "bookshelf": "^0.10.2",
     "bookshelf-api": "^1.7.0",
     "bookshelf-cascade-delete": "^2.0.1",
+    "bookshelf-mask": "^2.0.1",
     "bookshelf-modelbase": "^2.10.2",
     "bookshelf-uuid": "^1.0.0",
     "eslint": "^3.11.0",

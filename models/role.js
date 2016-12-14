@@ -20,6 +20,14 @@ export default class extends bookshelf.Model {
   static dependents = ['managers', 'modules'];
 
   /**
+   * 自定义字段列表，返回数据时会根据该列表定义的字段返回数据
+   * @static {Object}
+   */
+  static masks = {
+    custom: 'id,name',
+  };
+
+  /**
    * ID名称
    * @member
    * @return {string}
