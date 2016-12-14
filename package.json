@@ -36,6 +36,9 @@
     "bookshelf-cascade-delete": "^2.0.1",
     "bookshelf-modelbase": "^2.10.2",
     "bookshelf-uuid": "^1.0.0",
+    "eslint": "^3.11.0",
+    "eslint-config-google": "^0.7.1",
+    "eslint-plugin-import": "^2.2.0",
     "file-stream-rotator": "0.0.7",
     "get-prime-factors": "^1.0.0",
     "import-dir": "0.0.1",
@@ -59,9 +62,6 @@
   },
   "devDependencies": {
     "casual": "^1.5.8",
-    "eslint": "^3.11.0",
-    "eslint-config-google": "^0.7.1",
-    "eslint-plugin-import": "^2.2.0",
     "pre-commit": "^1.2.2",
     "supervisor": "^0.12.0"
   },

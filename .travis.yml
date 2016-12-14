@@ -19,7 +19,7 @@ install:
   - npm --version
 
   # Install our package dependencies
-  - npm install
+  - npm install --production
 
 script:
   - npm run eslint
