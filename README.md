@@ -137,18 +137,18 @@ export default ResourceRouter.define({
 ```
 上面的代码会自动创建以下路由：
 
-|提交方式|路由|说明|
-|-|-|-|
-|POST|/roles|新建一个角色|
-|GET|/roles|列出所有角色|
-|GET|/roles/:id|获取某个指定角色的信息|
-|PATCH|/roles/:id|更新某个指定角色的信息|
-|DELETE|/roles/:id|删除某个指定角色的信息|
-|POST|/roles/:role_id/users|新增一个某个指定角色的用户|
-|GET|/roles/:role_id/users|列出某个指定角色的所有用户|
-|GET|/roles/:role_id/users/:user_id|列出某个指定角色的指定用户|
-|PATCH|/roles/:role_id/users/:user_id|修改某个指定角色的指定用户|
-|DELETE|/roles/:role_id/users/:user_id|删除某个指定角色的指定用户|
+ 提交方式 | 路由 | 说明
+---|---|---
+POST|/roles|新建一个角色
+GET|/roles|列出所有角色
+GET|/roles/:id|获取某个指定角色的信息
+PATCH|/roles/:id|更新某个指定角色的信息
+DELETE|/roles/:id|删除某个指定角色的信息
+POST|/roles/:role_id/users|新增一个某个指定角色的用户
+GET|/roles/:role_id/users|列出某个指定角色的所有用户
+GET|/roles/:role_id/users/:user_id|列出某个指定角色的指定用户
+PATCH|/roles/:role_id/users/:user_id|修改某个指定角色的指定用户
+DELETE|/roles/:role_id/users/:user_id|删除某个指定角色的指定用户
 
 
 ## Overview
