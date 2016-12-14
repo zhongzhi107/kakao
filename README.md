@@ -16,7 +16,6 @@ An API-driven framework for building nodejs apps, using MVC conventions. It only
 * Well organized configuration files and routes
 
 ## TODO
-- [ ] HTTPS support
 - [x] Log
   - [x] accessLog
   - [x] requestLog
@@ -27,7 +26,7 @@ An API-driven framework for building nodejs apps, using MVC conventions. It only
   - [x] PUT
   - [x] DELETE
 - [x] ORM
-  - [ ] withRelated返回指定的columns
+  - [x] withRelated返回指定的columns - mask plugin
   - [x] 自定义sql
   - [ ] joi.description()不起作用
   - [x] schema/joi
@@ -35,6 +34,7 @@ An API-driven framework for building nodejs apps, using MVC conventions. It only
   - [x] 使用bookshelf-cascade-delete删除关联表数据，避免使用数据库外键
   - [x] 根据models自动创建CRUD路由
 - [x] Debug
+- [ ] HTTPS support
 - [ ] Cache
 - [ ] Task
 - [ ] Test
@@ -169,6 +169,20 @@ GET|/roles/:role_id/users/:user_id|列出某个指定角色的指定用户
 PATCH|/roles/:role_id/users/:user_id|修改某个指定角色的指定用户
 DELETE|/roles/:role_id/users/:user_id|删除某个指定角色的指定用户
 
+## API支持的querystring
+- 查询类
+  - http://localhost/roles?where=id&where=>&where=10
+  - http://localhost/roles??where[name]=sales
+- 返回值类
+  - 分页
+    - http://localhost/roles?page=1&page_size=15
+  - 自定义返回字段
+    - http://localhost/roles?mask=custom
+    - http://localhost/roles?mask=id,name
+  - 返回关联模型数据
+    - http://localhost/roles?withRelated=users
+  - 排序
+    - http://localhost/roles?sort=created_at&direction=DESC
 
 ## Overview
 ...
