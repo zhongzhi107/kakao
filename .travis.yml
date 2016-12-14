@@ -1,7 +1,6 @@
 sudo: false
 language: node_js
 node_js:
-  - "4"
   - "6"
 
 branches:
@@ -13,7 +12,14 @@ cache:
     - node_modules
 
 install:
-  - npm install 
+  - npm install -g npm
+
+  # Output our current versions for debugging
+  - node --version
+  - npm --version
+
+  # Install our package dependencies
+  - npm install
 
 script:
   - npm run eslint
