@@ -93,13 +93,13 @@ export default ResourceRouter.define(Role.collection())
 
 上面的代码会自动创建以下路由：
 
-提交方式|路由|说明
--|-|-
-POST|/roles|新建一个角色
-GET|/roles|列出所有角色
-GET|/roles/:id|获取某个指定角色的信息
-PATCH|/roles/:id|更新某个指定角色的信息
-DELETE|/roles/:id|删除某个角色
+提交方式 | 路由 | 说明
+--- | --- | ---
+POST | /roles | 新建一个角色
+GET | /roles | 列出所有角色
+GET | /roles/:id | 获取某个指定角色的信息
+PATCH | /roles/:id | 更新某个指定角色的信息
+DELETE | /roles/:id | 删除某个角色
 
 ### 创建一个嵌套路由
 ```js
