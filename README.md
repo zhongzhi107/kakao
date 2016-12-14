@@ -1,19 +1,13 @@
 # Kakao
 
 [![Build Status](https://travis-ci.org/zhongzhi107/kakao.svg?branch=master)](https://travis-ci.org/zhongzhi107/kakao)
-[![Build status](https://ci.appveyor.com/api/projects/status/52hgp0fv4bmjjq25?svg=true)](https://ci.appveyor.com/project/zhongzhi107/kakao)
+[![Build status](https://ci.appveyor.com/api/projects/status/n1s6xqxlbk9f0fgr?svg=true)](https://ci.appveyor.com/project/zhongzhi107/kakao)
 [![Dependency Status](https://david-dm.org/zhongzhi107/kakao.svg)](https://david-dm.org/zhongzhi107/kakao)
 [![devDependency Status](https://david-dm.org/zhongzhi107/kakao/dev-status.svg)](https://david-dm.org/zhongzhi107/kakao#info=devDependencies)
 
 An API-driven framework for building nodejs apps, using MVC conventions. It only will provide a structure, inspired on Ruby on Rails, that will allow you to organise better your projects, initialise your own or third party libraries, call in a easy way your models, helpers, etc.
 
-## Features
-
-* MVC architecture project
-* ES6 support
-* Helpers support
-* ORM, ODM or DB driver independent
-* Well organized configuration files and routes
+[Include](./docs/features.md)
 
 ## TODO
 - [ ] HTTPS support
