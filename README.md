@@ -7,7 +7,13 @@
 
 An API-driven framework for building nodejs apps, using MVC conventions. It only will provide a structure, inspired on Ruby on Rails, that will allow you to organise better your projects, initialise your own or third party libraries, call in a easy way your models, helpers, etc.
 
-[Include](./docs/features.md)
+## Features
+
+* MVC architecture project
+* ES6 support
+* Helpers support
+* ORM, ODM or DB driver independent
+* Well organized configuration files and routes
 
 ## TODO
 - [ ] HTTPS support
