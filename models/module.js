@@ -35,9 +35,12 @@ export default class extends bookshelf.Model {
    * schema验证
    */
   get validate() {
-    return {
+    return Joi.object().keys({
       name: Joi.string().required(),
-    };
+      description: Joi.string(),
+      created_at: Joi.date(),
+      updated_at: Joi.date(),
+    });
   }
 
   /**

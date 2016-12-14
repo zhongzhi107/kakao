@@ -1,4 +1,4 @@
-// import Joi from 'joi';
+import Joi from 'joi';
 import bookshelf from './base';
 import Manager from './manager';
 import Module from './module';
@@ -8,6 +8,11 @@ import Module from './module';
  * @extends bookshelf.Model
  */
 export default class extends bookshelf.Model {
+
+  // static fields = Joi.object().keys({
+  //   name: Joi.number().required(),
+  // });
+
   /**
    * 依赖表，删除时依据此项删除关联表中对应的数据
    * @static {array}
@@ -45,11 +50,14 @@ export default class extends bookshelf.Model {
   /**
    * schema验证
    */
-  // get validate() {
-  //   return {
-  //     name: Joi.string().required(),
-  //   };
-  // }
+  get validate() {
+    return Joi.object().keys({
+      name: Joi.string().required(),
+      description: Joi.string(),
+      created_at: Joi.date(),
+      updated_at: Joi.date(),
+    });
+  }
 
   /**
    * 一对多关系

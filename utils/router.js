@@ -1,23 +1,7 @@
 import Router from 'koa-router';
-import compose from 'koa-compose';
+// import compose from 'koa-compose';
 import Collection from 'bookshelf/lib/collection';
 import _ from 'lodash';
-
-function parse_args(ori_args, option_defaults = {}) {
-  let args = Array.prototype.slice.call(ori_args);
-  let none = async (ctx, next) => await next();
-  let options = args.pop();
-  let middlewares = args;
-  middlewares = _.compact(middlewares);
-  if (_.isFunction(options)) {
-    middlewares = middlewares.concat(options);
-    options = {};
-  }
-  middlewares = _.isEmpty(middlewares) ? [none] : middlewares ;
-  options = _.defaults(options, option_defaults);
-
-  return {middlewares, options};
-}
 
 /**
  * @class
@@ -62,8 +46,6 @@ export default class ResourceRouter extends Router {
       this.collection = (ctx) => collection;
     }
     options.name = options.name || options.model.prototype.tableName;
-    options.fields = options.fields ||
-      (options.model ? options.model.fields : undefined);
     options.root = options.root || '/' + options.name;
     options.title = options.title || options.name;
     options.description = options.description || options.title;
@@ -82,7 +64,6 @@ export default class ResourceRouter extends Router {
    * @return {Object}
    */
   create() {
-    // let {options, ...middlewares} = arguments;
     let {collection, pattern} = this;
     this.methods.create = true;
     // create
@@ -113,28 +94,77 @@ export default class ResourceRouter extends Router {
     //   middlewares = middlewares.concat(options);
     //   options = {};
     // }
-    // middlewares = _.isEmpty(middlewares) ? [async (ctx, next) => await next()] : middlewares ;
+    // middlewares = _.isEmpty(middlewares) ?
+    // [async (ctx, next) => await next()] : middlewares ;
     // console.log('====', middlewares);
     let {collection, options: {id}, pattern} = this;
 
     // read list
-    this.get(pattern.root, /*compose(middlewares),*/ async (ctx) => {
-      let query = ctx.state.query || collection(ctx).model.forge();
-      if (collection(ctx).relatedData) {
-        query = query.where({
-          [collection(ctx).relatedData.key('foreignKey')]:
-          collection(ctx).relatedData.parentId,
-        });
+    this.get(pattern.root, async (ctx) => {
+      const query = ctx.query;
+      const fetchParams = {};
+      let result = {};
+      let model = ctx.state.query || collection(ctx).model.forge();
+
+      if (query.withRelated) {
+        fetchParams.withRelated = query.withRelated;
       }
-      let resources = await query.fetchPage();
-      ctx.body = resources.models;
-      //  ctx.pagination.length = resources.pagination.rowCount;
+
+      if (query.where) {
+        // curl --globoff http://localhost:3000/api/roles?where=id\&where=\>\&where=1
+        if(Array.isArray(query.where)) {
+          model = model.where(...query.where);
+          // model = model.where.apply(model, query.where);
+        } else if(isObject(query.where)) {
+          // curl --globoff http://localhost:3000/api/roles?where[name]=sales
+          model = model.where(query.where);
+        }
+      }
+
+      // Order by support
+      if (query.sort) {
+        let direction = query.direction || 'ASC';
+        direction = direction.toLowerCase();
+        model = model.orderBy(query.sort, direction);
+      }
+
+      // Pagination support
+      if (query.page || query.page_size) {
+        // console.log(query);
+        // const {page = 1, page_size = 10} = query;
+        // console.log(page, pageSize);
+        const page = query.page || 1;
+        const pageSize = query.page_size || 10;
+        await model
+          .fetchPage({
+            page,
+            pageSize,
+            ...fetchParams,
+          })
+          .then((items) => {
+            result = items.toJSON();
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        await model
+          .fetchAll(fetchParams)
+          .then((items) => {
+            result = items.toJSON();
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+
+      ctx.body = result;
     });
 
     // read item
     this.get(pattern.item, async (ctx) => {
       ctx.body = await collection(ctx)
-        .query((q) => q.where({[id]: ctx.params[id]}))
+        .query((q) => q.where({[id]: ctx.params.id}))
         .fetchOne({required: true});
     });
     return this;
@@ -146,7 +176,6 @@ export default class ResourceRouter extends Router {
    * @return {Object}
    */
   update() {
-    // let {middlewares, options} = parse_args(arguments);
     let {collection, options: {id}, pattern} = this;
     this.methods.update = true;
     const update = async (ctx) => {
@@ -156,7 +185,10 @@ export default class ResourceRouter extends Router {
           .query((q) => q.where({[id]: ctx.params[id]}))
           .fetch({required: true})
       ).first();
-      await ctx.state.resource.save(attributes, {patch: true});
+      await ctx.state.resource.save(attributes, {
+        method: 'update',
+        patch: true,
+      });
       ctx.body = ctx.state.resource;
       ctx.status = 202;
     };
@@ -172,7 +204,6 @@ export default class ResourceRouter extends Router {
    * @return {Object}
    */
   destroy() {
-    // let {middlewares, options} = parse_args(arguments)
     let {collection, pattern, options: {id}} = this;
     this.methods.destroy = true;
 

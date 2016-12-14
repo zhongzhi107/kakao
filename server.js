@@ -32,7 +32,6 @@ app.use(json({pretty: true}));
 
 // 导入路由
 const routes = importDir('./routes');
-console.log(routes);
 Object.keys(routes).map(
   (name) => app.use(routes[name].routes())
 );

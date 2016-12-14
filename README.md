@@ -80,13 +80,87 @@ $ /usr/local/mongodb/bin/mongo
 - 关联表名中关联的字段默认为 `被关联表名称的单数_id`，如 `user_id` `tag_id` `post_id`
 - ...
 
+## 路由
+kakao能根据model自动创建RESTful路由地址
+
+### 创建一个最简单的CRUD路由
+```js
+import Role from '../models/roles';
+import ResourceRouter from '../utils/router';
+
+export default ResourceRouter.define(Role.collection())
+```
+
+上面的代码会自动创建以下路由：
+
+|提交方式|路由|说明|
+|-|-|-|
+|POST|/roles|新建一个角色|
+|GET|/roles|列出所有角色|
+|GET|/roles/:id|获取某个指定角色的信息|
+|PATCH|/roles/:id|更新某个指定角色的信息|
+|DELETE|/roles/:id|删除某个角色|
+
+### 创建一个嵌套路由
+```js
+import Role from '../models/role';
+import ResourceRouter from '../utils/router';
+
+const users = ResourceRouter.define({
+  // 假设在role model中已经设定了role和user的关联关系
+  collection: (ctx) => ctx.state.role.users(),
+  name: 'users',
+  setup(router) {
+    router
+      .use(async (ctx, next) => {
+        ctx.state.role = await Role.findById(
+          ctx.params.role_id,
+          {require: true}
+        );
+        await next();
+      })
+      .crud();
+  },
+});
+
+export default ResourceRouter.define({
+  collection: Role.collection(),
+  setup(router) {
+    router.crud();
+    // router.create().read().update().destroy();
+
+    // 使用嵌套路由
+    router.use('/roles/:role_id(\\d+)', users.routes());
+  },
+});
+
+```
+上面的代码会自动创建以下路由：
+
+|提交方式|路由|说明|
+|-|-|-|
+|POST|/roles|新建一个角色|
+|GET|/roles|列出所有角色|
+|GET|/roles/:id|获取某个指定角色的信息|
+|PATCH|/roles/:id|更新某个指定角色的信息|
+|DELETE|/roles/:id|删除某个指定角色的信息|
+|POST|/roles/:role_id/users|新增一个某个指定角色的用户|
+|GET|/roles/:role_id/users|列出某个指定角色的所有用户|
+|GET|/roles/:role_id/users/:user_id|列出某个指定角色的指定用户|
+|PATCH|/roles/:role_id/users/:user_id|修改某个指定角色的指定用户|
+|DELETE|/roles/:role_id/users/:user_id|删除某个指定角色的指定用户|
+
+
 ## Overview
 ...
 
 ## Notes
-- curl传递多个querystring参数时，`&` 前需要加 `\`，如 `http://localhost/api/roles?sort=id\&direction=desc`
+- curl传递多个querystring参数时，`&` 前需要加 `\`，如 `curl http://localhost/roles?sort=id\&direction=desc`
+- curl传递带[]参赛时，需要加上 `--globoff` 参数，如 `curl --globoff http://localhost/roles?where[name]=sales`
 
 ## References
 
 - [bookshelfjs docs](http://bookshelfjs.org)
 - [knexjs docs](http://knexjs.org)
+- [Joi docs](https://github.com/hapijs/joi)
+- [koa-router docs](https://github.com/alexmingoia/koa-router)
