@@ -1,0 +1,19 @@
+sudo: false
+language: node_js
+node_js:
+  - "4"
+  - "6"
+
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm install --production
+
+script:
+  - npm run eslint

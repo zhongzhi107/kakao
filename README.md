@@ -1,5 +1,10 @@
 # Kakao
 
+[![Build Status](https://travis-ci.org/zhongzhi107/kakao.svg?branch=master)](https://travis-ci.org/zhongzhi107/kakao)
+[![Build status](https://ci.appveyor.com/api/projects/status/52hgp0fv4bmjjq25?svg=true)](https://ci.appveyor.com/project/zhongzhi107/kakao)
+[![Dependency Status](https://david-dm.org/zhongzhi107/kakao.svg)](https://david-dm.org/zhongzhi107/kakao)
+[![devDependency Status](https://david-dm.org/zhongzhi107/kakao/dev-status.svg)](https://david-dm.org/zhongzhi107/kakao#info=devDependencies)
+
 An API-driven framework for building nodejs apps, using MVC conventions. It only will provide a structure, inspired on Ruby on Rails, that will allow you to organise better your projects, initialise your own or third party libraries, call in a easy way your models, helpers, etc.
 
 ## Features
@@ -42,31 +47,45 @@ An API-driven framework for building nodejs apps, using MVC conventions. It only
 
 First install [node.js](http://nodejs.org/) and [mysql](http://dev.mysql.com/downloads/mysql/). Then:
 
-Download the project to a local folder
+1. Clone the project to local
 ```
 $ git clone https://github.com/zhongzhi107/kakao
 ```
-Install dependencies
+
+1. Install dependencies
 ```
 $ npm install
 ```
 
-Start the application with one of the following:
+1. Modify config file `config/index.js`
+```
+$ vi config/index.js
+```
+
+  ```js
+  connection: {
+    host: process.env.MYSQL_HOST || 'localhost',
+    user: process.env.MYSQL_USER || 'root',
+    password: process.env.MYSQL_PASSWORD || '',
+    database: process.env.MYSQL_DATABASE || 'kakao',
+    port: 3306,
+    charset: 'utf8',
+    timezone: 'UTC',
+    // debug: true,
+  }
+  ```
+
+1. Migrate data
+```
+$ npm run migrate:latest
+```
+
+1. Start the application
 ```
 $ npm start
-$ npm run serve
 ```
-By default the app tries to connect to port 3000. After starting the application you can check it at [localhost:3000](http://localhost:3000)
+By default the app tries to connect to port 3000. After starting the application you can check it at [http://localhost:3000/roles](http://localhost:3000/roles)
 
-The url [localhost:3000](http://localhost:3000) returns the json document yielded by mongoose. This assumes that you have a connection stablished with a mongodb instance and a mongo document has already been inserted in the db.
-
-```sh
-# Start mongodb Service
-$ /usr/local/mongodb/bin/mongod --dbpath=./data
-
-# mongodb Client
-$ /usr/local/mongodb/bin/mongo
-```
 
 ## Convention
 > 以下是默认约定，如果不想按着默认约定编码，可以在代码中使用指定参数的方式更改
