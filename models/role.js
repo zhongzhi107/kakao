@@ -72,8 +72,8 @@ export default class extends bookshelf.Model {
    * @method
    * @return {bookshelf.Model}
    */
-  managers() {
-    return this.belongsToMany(Manager);
+  manager() {
+    return this.belongsTo(Manager);
   }
 
   /**

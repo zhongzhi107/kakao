@@ -1,11 +1,11 @@
 exports.up = function(knex, Promise) {
   return knex.schema
-  .createTable('managers_roles', function(table) {
-    table.comment('用户角色关联表');
-    table.integer('manager_id').notNullable().comment('用户ID');
-    table.integer('role_id').notNullable().comment('角色ID');
-    // table.unique(['manager_id', 'role_id']);
-  })
+  // .createTable('managers_roles', function(table) {
+  //   table.comment('用户角色关联表');
+  //   table.integer('manager_id').notNullable().comment('用户ID');
+  //   table.integer('role_id').notNullable().comment('角色ID');
+  //   // table.unique(['manager_id', 'role_id']);
+  // })
   .createTable('managers', function(table) {
     table.comment('管理员用户表');
     table.increments();
@@ -54,6 +54,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string('name', 50).nullable().comment('角色名称');
     table.string('description').nullable().comment('角色描述');
+    table.integer('manager_id').notNullable().comment('管理员ID');
     table.timestamps(true, true);
   })
   .createTable('tags', function(table) {

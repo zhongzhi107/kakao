@@ -15,6 +15,15 @@ export default class extends bookshelf.Model {
   static dependents = ['roles'];
 
   /**
+   * 自定义字段列表，返回数据时会根据该列表定义的字段返回数据
+   * @static {Object}
+   */
+  static masks = {
+    custom: 'account,nickname,role(id,name)',
+  };
+
+
+  /**
    * 表名称
    * @return {string}
    */
@@ -46,8 +55,8 @@ export default class extends bookshelf.Model {
    * @method
    * @return {bookshelf.Collection}
    */
-  roles() {
-    return this.belongsToMany(Role);
+  role() {
+    return this.hasOne(Role);
   }
 
   /**

@@ -173,9 +173,13 @@ export default class ResourceRouter extends Router {
     // read item
     this.get(pattern.item, async (ctx) => {
       const query = ctx.query;
+      const fetchParams = {required: true};
+      if (query.withRelated) {
+        fetchParams.withRelated = query.withRelated;
+      }
       await collection(ctx)
         .query((q) => q.where({[id]: ctx.params.id}))
-        .fetchOne({required: true})
+        .fetchOne(fetchParams)
         .then((item) => {
           if (query.mask) {
             ctx.body = item.mask(query.mask);
