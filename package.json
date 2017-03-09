@@ -46,7 +46,7 @@
     "joi": "^10.0.5",
     "knex": "^0.12.6",
     "koa": "^2.0.0",
-    "koa-bodyparser": "^3.2.0",
+    "koa-bodyparser": "^4.1.0",
     "koa-compose": "^3.2.1",
     "koa-json": "^2.0.2",
     "koa-morgan": "^1.0.1",
