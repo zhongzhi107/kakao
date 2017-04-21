@@ -1,6 +1,5 @@
 # Kakao
 
-[![Build Status](https://travis-ci.org/zhongzhi107/kakao.svg?branch=master)](https://travis-ci.org/zhongzhi107/kakao)
 [![Build status](https://ci.appveyor.com/api/projects/status/n1s6xqxlbk9f0fgr?svg=true)](https://ci.appveyor.com/project/zhongzhi107/kakao)
 [![Dependency Status](https://david-dm.org/zhongzhi107/kakao.svg)](https://david-dm.org/zhongzhi107/kakao)
 [![devDependency Status](https://david-dm.org/zhongzhi107/kakao/dev-status.svg)](https://david-dm.org/zhongzhi107/kakao#info=devDependencies)
@@ -55,7 +54,7 @@ $ git clone https://github.com/zhongzhi107/kakao
 
 1. Install dependencies
 ```
-$ npm install
+$ yarn
 ```
 
 1. Modify config file `config/index.js`
@@ -78,12 +77,12 @@ $ vi config/index.js
 
 1. Migrate data
 ```
-$ npm run migrate:latest
+$ yarn run migrate:latest
 ```
 
 1. Start the application
 ```
-$ npm start
+$ yarn start
 ```
 By default the app tries to connect to port 3000. After starting the application you can check it at [http://localhost:3000/roles](http://localhost:3000/roles)
 
