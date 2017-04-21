@@ -1577,10 +1577,6 @@ generic-pool@^2.4.2:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/generic-pool/-/generic-pool-2.5.4.tgz#38c6188513e14030948ec6e5cf65523d9779299b"
 
-get-prime-factors@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/get-prime-factors/-/get-prime-factors-1.0.0.tgz#74696a662b852cda9d49ca356d51086c0980086a"
-
 getpass@^0.1.1:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/getpass/-/getpass-0.1.6.tgz#283ffd9fc1256840875311c1b60e8c40187110e6"
