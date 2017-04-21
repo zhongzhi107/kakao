@@ -1,6 +1,6 @@
 {
   "name": "kakao",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Kakao is an ORM and RESTful nodejs web framework based Koa2 like Ruby on Rails.",
   "keywords": [
     "ORM",
@@ -13,12 +13,12 @@
   "author": "zhongzhi <zhong.zhi@163.com>",
   "main": "index.js",
   "scripts": {
-    "changelog": "github_changelog_generator --bug-labels --enhancement-labels --future-release=$npm_config_release --header-label='# Changelog'",
     "eslint": "eslint **/*.js",
     "migrate:latest": "knex migrate:latest && knex seed:run",
     "migrate:rollback": "knex migrate:rollback",
     "release": "standard-version",
-    "production": "NODE_ENV=production node_modules/.bin/pm2 index.js",
+    "postrelease": "git push && git push origin --tags",
+    "production": "NODE_ENV=production pm2 index.js",
     "serve": "DEBUG=knex:query NODE_ENV=development babel-node server.js",
     "start": "DEBUG=knex:query NODE_ENV=development supervisor --ignore node_modules index.js",
     "start2": "knex migrate:latest && knex seed:run && NODE_ENV=development PORT=3000 npm run watch:server"
