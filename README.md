@@ -99,6 +99,34 @@ By default the app tries to connect to port 3000. After starting the application
 - 关联表名中关联的字段默认为 `被关联表名称的单数_id`，如 `user_id` `tag_id` `post_id`
 - ...
 
+## 改变默认约定的方法
+### 改变表名称和模型名称的约定
+例如：表名称是 `tb_roles`，希望模型名称是 `roles`，可以在定义模型时指定 `tableName`
+
+```js
+// models/role.js
+export default class extends bookshelf.Model {
+  get tableName() {
+    return 'tb_roles';
+  }
+}
+```
+
+### 改变表名称和路由地址的约定
+例如：表名称是 `tb_roles`，模型名称是 `roles`，希望创建的路由是 `/roles`，可以在创建路由时指定 `name` 参数(不指定的话，创建出来的路由会使用 `tableName`，即/tb_roles)
+
+```js
+// routes/role.js
+import Role from '../models/role';
+import ResourceRouter from '../utils/router';
+
+export default ResourceRouter.define({
+  collection: Role.collection(),
+  name: 'roles'
+});
+```
+
+
 ## 路由
 kakao能根据model自动创建RESTful路由地址
 
@@ -184,6 +212,43 @@ DELETE|/roles/:role_id/users/:user_id|删除某个指定角色的指定用户
   - 排序
     - http://localhost/roles?sort=created_at&direction=DESC
 
+### mask 的用法
+mask 可以指定返回的记录中包含哪些字段，这样做有2点好处：
+- 减少不必要的数据传输，减少带宽和流量的消耗
+- 保护数据表中的敏感字段，如 `password` 字段
+
+mask 有2种使用方式：
+- 在模型中定义 mast 属性
+  ```js
+  class Role extends bookshelf.Model {
+    get tableName() {
+      return 'roles';
+    }
+
+    users() {
+      return this.hasMany(User);
+    }
+
+    static masks = {
+      // 注册 custom1 mask
+      custom1: 'id,name',
+      // 注册 custom2 mask
+      custom2: 'name,users(title,body)'
+    }
+  }
+  ```
+- 在使用 mask 方法时直接传入字段参数，这种方式更加灵活
+```js
+Role
+  .forge({ name: 'foo' })
+  .fetch({ withRelated: 'users' })
+  .then(function(model) {
+    console.log(model.mask('custom1'));
+    // => { id: 1, name: 'foo' }
+    console.log(model.mask('name,users(title,body)'));
+    // => { name: 'foo', users: [{ title: 'biz', body: 'baz' }, { title: 'qux', body: 'qix' }]}
+  });
+```
 ## Overview
 ...
 
