@@ -8,6 +8,12 @@ import {knexfile} from '../config';
 
 const base = bookshelf(knex(knexfile));
 
+// 让 Model 具有返回虚拟字段的功能
+base.plugin('virtuals');
+
+// 让 Model 调用 toJSON 方法时具有显示／隐藏某些字段的功能
+base.plugin('visibility');
+
 // 让 Model 具有时间戳、数据校验和部分CURD功能
 base.plugin(modelBase.pluggable);
 

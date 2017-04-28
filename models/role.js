@@ -28,6 +28,31 @@ export default class extends bookshelf.Model {
   };
 
   /**
+   * 虚拟字段
+   */
+  get virtuals() {
+    return {
+      fullName: () => {
+        return `===${this.id}===`;
+      },
+    };
+  }
+
+  /**
+   * 调用 toJSON 方法时需要隐藏的字段
+   */
+  get hidden() {
+    return ['id', 'password'];
+  }
+
+  /**
+   * 调用 toJSON 方法时需要显示的字段
+   */
+  // get visible() {
+  //   return ['name'];
+  // }
+
+  /**
    * ID名称
    * @member
    * @return {string}

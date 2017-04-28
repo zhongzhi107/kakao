@@ -221,19 +221,19 @@ mask 有2种使用方式：
 - 在模型中定义 mast 属性
   ```js
   class Role extends bookshelf.Model {
+    static masks = {
+      // 注册 custom1 mask
+      custom1: 'id,name',
+      // 注册 custom2 mask
+      custom2: 'name,users(title,body)'
+    }
+
     get tableName() {
       return 'roles';
     }
 
     users() {
       return this.hasMany(User);
-    }
-
-    static masks = {
-      // 注册 custom1 mask
-      custom1: 'id,name',
-      // 注册 custom2 mask
-      custom2: 'name,users(title,body)'
     }
   }
   ```
@@ -249,6 +249,45 @@ Role
     // => { name: 'foo', users: [{ title: 'biz', body: 'baz' }, { title: 'qux', body: 'qix' }]}
   });
 ```
+更多信息请查看 [这里](https://github.com/seegno/bookshelf-mask)
+
+### virtuals 的用法
+virtuals 让模型可以返回一个虚拟的字段，比如，用 `firstname` 和 `lastname` 生成 `fullname`，更多信息请查看 [这里](https://github.com/tgriesser/bookshelf/wiki/Plugin:-Virtuals)
+```js
+export default class extends bookshelf.Model {
+  get virtuals() {
+    return {
+      fullName: () => {
+        return this.firstname + this.lastname;
+      },
+    };
+  }
+}
+```
+
+### visibility 的用法
+visibility 让模型 `toJSON` 方法显示或隐藏某些字段，比如隐藏密码字段。和 mask 相比，这个设置是全局的，在模型中设置后，会影响所以的返回结果。
+
+更多信息请查看 [这里](https://github.com/tgriesser/bookshelf/wiki/Plugin:-Visibility)
+
+```js
+export default class extends bookshelf.Model {
+  /**
+   * 调用 toJSON 方法时需要隐藏的字段
+   */
+  get hidden() {
+    return ['id', 'password'];
+  }
+
+  /**
+   * 调用 toJSON 方法时需要显示的字段
+   */
+  get visible() {
+    return ['name'];
+  }
+}
+```
+
 ## Overview
 ...
 
