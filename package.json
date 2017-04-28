@@ -1,6 +1,6 @@
 {
   "name": "kakao",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Kakao is an ORM and RESTful nodejs web framework based Koa2 like Ruby on Rails.",
   "keywords": [
     "ORM",
