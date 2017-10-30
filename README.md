@@ -1,5 +1,9 @@
 # Kakao
 
+Discarded.
+
+Move to https://github.com/qails
+
 [![Build status](https://ci.appveyor.com/api/projects/status/n1s6xqxlbk9f0fgr?svg=true)](https://ci.appveyor.com/project/zhongzhi107/kakao)
 [![Dependency Status](https://david-dm.org/zhongzhi107/kakao.svg)](https://david-dm.org/zhongzhi107/kakao)
 [![devDependency Status](https://david-dm.org/zhongzhi107/kakao/dev-status.svg)](https://david-dm.org/zhongzhi107/kakao#info=devDependencies)
