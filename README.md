@@ -309,6 +309,17 @@ var Events = db.Collection.extend( {
 module.exports = db.collection( 'Events', Events );
 ```
 
+### 指定多级 withRelated
+```js
+// https://github.com/INTECH-RGB/homie-dashboard
+const devices = await DeviceModel
+    .fetchAll({ withRelated: ['nodes', 'nodes.tags', 'nodes.properties', {
+      'nodes.properties.history': function (qb) {
+        qb.groupBy('property_id')
+      }
+}]})
+```
+
 
 ## Overview
 ...
